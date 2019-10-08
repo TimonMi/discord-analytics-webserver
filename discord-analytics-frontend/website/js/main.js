@@ -25,7 +25,7 @@ function isAnyPartOfElementInViewport(el) {
 const observer = lozad();
 
 //inital options construct and json loading
-var scrapeList = JSON.parse(loadFile('/discord-analytics/data/list'));
+var scrapeList = JSON.parse(loadFile('./data/list'));
 var select = document.getElementById('select');
 
 url = decodeURI(window.location);
@@ -44,7 +44,7 @@ if (index == -1) {
     );
   }
 
-  var discord_scrape = loadFile('/discord-analytics/data/' + scrapeList[0]);
+  var discord_scrape = loadFile('./data/' + scrapeList[0]);
   discord_data = JSON.parse(discord_scrape);
 } else {
   select.innerHTML = '<option>' + SelectItem + '</option>';
@@ -58,7 +58,7 @@ if (index == -1) {
     }
   }
 
-  var discord_scrape = loadFile('/discord-analytics/data/' + SelectItem);
+  var discord_scrape = loadFile('./data/' + SelectItem);
   discord_data = JSON.parse(discord_scrape);
 }
 
@@ -187,9 +187,7 @@ var name_select = document.getElementById('name_select');
 var images_table = document.getElementById('images_table');
 var selected_user = Names[0];
 var User = discord_data.users[selected_user];
-var api_response = JSON.parse(
-  loadFile(`/discord-analytics/api/?id=` + User['id'])
-);
+var api_response = JSON.parse(loadFile(`./api/?id=` + User['id']));
 var table_avatar = document.getElementById('table_avatar');
 
 function user_tables_construct(api_response) {
@@ -207,7 +205,7 @@ function user_tables_construct(api_response) {
     api_response['avatarURL']
   }"></th><td> <b>${
     api_response['name']
-  }</b> <img id="bot" src="/discord-analytics/media/bot.svg"> <br style="line-height: 35px;">${
+  }</b> <img id="bot" src="./media/bot.svg"> <br style="line-height: 35px;">${
     api_response['tag']
   }<br>${api_response['id']}</td></tr>`;
   table_name.innerHTML =
@@ -328,9 +326,7 @@ function reloadName(val) {
   selected_user = val;
   User = discord_data.users[val];
   shift = 0;
-  var api_response = JSON.parse(
-    loadFile(`/discord-analytics/api/?id=` + User['id'])
-  );
+  var api_response = JSON.parse(loadFile(`./api/?id=` + User['id']));
   var table_avatar = document.getElementById('table_avatar');
   if (api_response.response.code == 200) {
     user_tables_construct(api_response);
