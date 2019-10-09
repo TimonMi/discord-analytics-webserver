@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  discord-analytics-backend:
+    restart: always
+    build: discord-analytics-backend
+    image: discord-analytics-backend
+    environment:
+      - TOKEN=
+    networks:
+      - private
+
+  discord-analytics-frontend:
+    restart: always
+    build: discord-analytics-frontend
+    image: discord-analytics-frontend
+    networks:
+      - private
+
+  nginx:
+    restart: always
+    build: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/nginx
+    networks:
+      - private
+    depends_on:
+      - discord-analytics-backend
+      - discord-analytics-frontend
+
+networks:
+  private:
+    driver: 'bridge'
