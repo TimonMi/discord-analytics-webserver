@@ -1,6 +1,10 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const token = process.env.TOKEN;
+const token = process.env.DISCORD_BOT_TOKEN;
+
+if(!token) {
+  console.err("You don't have a discord bot token defined! Declare one using the enviroment variable DISCORD_BOT_TOKEN");
+}
 
 module.exports = {
   getData: async function(id) {

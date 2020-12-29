@@ -6,6 +6,8 @@ const port = 80;
 const app = express();
 
 app.get('/data/list', function(req, res) {
+  //res.send(['Server.json']);
+  //return;
   const folder = path.join(__dirname + '/website/data');
   var file_list = [];
 

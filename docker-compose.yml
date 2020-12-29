@@ -1,34 +1,36 @@
 version: '3.3'
 services:
   discord-analytics-backend:
-    restart: always
+    restart: unless-stopped
     build: discord-analytics-backend
-    image: discord-analytics-backend
-    environment:
-      - TOKEN=
+    env_file:
+      - .env
     networks:
       - private
-
   discord-analytics-frontend:
-    restart: always
+    restart: unless-stopped
     build: discord-analytics-frontend
-    image: discord-analytics-frontend
     networks:
       - private
-
-  nginx:
-    restart: always
-    build: nginx
-    ports:
-      - '80:80'
+  swag:
+    image: ghcr.io/linuxserver/swag
+    container_name: swag
+    environment:
+      - TZ=Europe/Berlin
+      - VALIDATION=http
+    env_file:
+      - .env
     volumes:
-      - ./nginx:/etc/nginx/nginx
+      - ./nginx.cfg:/config/nginx/site-confs/default
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
     networks:
       - private
     depends_on:
       - discord-analytics-backend
       - discord-analytics-frontend
-
 networks:
   private:
     driver: 'bridge'
